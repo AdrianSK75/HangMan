@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "UTF-8">
+        <title>Hangman</title>
+        <style>
+            body {
+                
+                font-family: 'Itim', cursive;
+                text-align: center;
+                margin-top: 15%;
+                font-size: 25px;
+                background-color: #8e9775;
+            }
+            .topics {
+                color: #eeeeee;
+            }
+            
+            .button {
+                display: inline-block;
+                padding: 15px 25px;
+                font-size: 24px;
+                cursor: pointer;
+                text-align: center;
+                text-decoration: none;
+                outline: none;
+                color: #fff;
+                background-color: #eeeeee;
+                border: none;
+                border-radius: 15px;
+                box-shadow: 0 9px #999;
+            }
+
+            .button:hover {background-color: #4a503d}
+
+            .button:active {
+                background-color: #4a503d;
+                box-shadow: 0 5px #666;
+                transform: translateY(4px);
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div class = "topics">
+            <h1 id = "try">WELCOME TO HANGMAN</h1>
+            <h2 id = "randomWord" ></h2>
+            <button id = "button" class = "button" type = "button" onclick = "checkHang()">TRY</button>
+            <p id = "check"></p>
+        </div>
+
+        <script>
+               var words = ["monitor", "mouse", "pix", "caiet", "tastatura", "wellcode", "programator"];
+               var random = Math.floor(Math.random() * 7) + 1 , trys = 0;
+               var word = new String(words[random]);
+               const map = new Map();
+               const frq = new Array(word.length).fill(0);
+               var result = new Array();
+               result[0] = word[0];
+               document.querySelector("#randomWord").innerHTML = result[0] + " (first letter)"
+               
+               for(var i = 0; i < word.length; ++i) {
+                    ++map[word[i]];
+                    frq[i] = 0;
+               }
+               
+               function verifyPos(letter) {                     
+                      for(var i = 0; i < word.length; ++i) {                           
+                           if(word.charAt(i) == letter && frq[i] != 1) {
+                                 frq[i] = 1;
+                                 return i;
+                           }
+                        }
+               }
+               
+               function checkHang() {
+                        var letter = window.prompt("Guess the letter :)");
+                                           
+                        if(map[letter] != null) {
+                                var pos = verifyPos(letter);
+                                result[pos] = letter;
+                                
+                                document.querySelector("#randomWord").innerHTML = result.toString();
+                                document.querySelector("#try").innerHTML = "HANG &#128522;: " + trys + " / 10";                          
+                                document.getElementById("check").style.color = "green";
+                                document.querySelector("#check").innerHTML = "the letter was accepted";
+                        } else {            
+                                ++trys;  
+                                    
+                                document.querySelector("#try").innerHTML = "HANG &#129301;: " + trys + " / 10";
+                                document.getElementById("check").style.color = "red";
+                                document.querySelector("#check").innerHTML = "the letter was not accepted";
+                        }
+
+                        if(result.length - 1 == word.length - 1 && trys < 10) {    
+                            document.querySelector("#try").innerHTML = "WINNER";
+                            document.querySelector("#randomWord").innerHTML = "&#127867;Congratulions my friend , the correct word is: "  + word;
+                            
+                        } else if(result.length != word.length && trys >= 10) {
+                            document.querySelector("#try").innerHTML = "LOSER";
+                            document.querySelector("#randomWord").innerHTML = "&#127867;Sorry my friend you losed , the correct word is: "  + word;
+                            
+                        }
+
+               }
+               
+
+        </script>
+    </body>
+</html>
