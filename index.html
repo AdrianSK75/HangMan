@@ -56,8 +56,9 @@
                const map = new Map();
                const frq = new Array(word.length).fill(0);
                var result = new Array();
+               var len = word.length, count = 0;
                result[0] = word[0];
-               document.querySelector("#randomWord").innerHTML = result[0] + " (first letter)"
+               document.querySelector("#randomWord").innerHTML = result[0] + " (first letter) / word length -> " + len;
                
                for(var i = 0; i < word.length; ++i) {
                     ++map[word[i]];
@@ -79,8 +80,8 @@
                         if(map[letter] != null) {
                                 var pos = verifyPos(letter);
                                 result[pos] = letter;
-                                
-                                document.querySelector("#randomWord").innerHTML = result.toString();
+                                ++count;
+                                document.querySelector("#randomWord").innerHTML = result.toString() + " / word length -> " + len;
                                 document.querySelector("#try").innerHTML = "HANG &#128522;: " + trys + " / 10";                          
                                 document.getElementById("check").style.color = "green";
                                 document.querySelector("#check").innerHTML = "the letter was accepted";
@@ -92,13 +93,13 @@
                                 document.querySelector("#check").innerHTML = "the letter was not accepted";
                         }
 
-                        if(result.length - 1 == word.length - 1 && trys < 10) {    
+                        if(count == word.length - 1 && trys < 10) {    
                             document.querySelector("#try").innerHTML = "WINNER";
                             document.querySelector("#randomWord").innerHTML = "&#127867;Congratulations my friend , the correct word is: "  + word;
                             
-                        } else if(result.length - 1 != word.length - 1 && trys >= 10) {
+                        } else if(count != word.length - 1 && trys >= 10) {
                             document.querySelector("#try").innerHTML = "LOSER";
-                            document.querySelector("#randomWord").innerHTML = "&#127867;Sorry my friend you losed , the correct word is: "  + word;
+                            document.querySelector("#randomWord").innerHTML = "&#129319;Sorry my friend you losed , the correct word is: "  + word;
                             
                         }
 
