@@ -94,9 +94,9 @@
 
                         if(result.length - 1 == word.length - 1 && trys < 10) {    
                             document.querySelector("#try").innerHTML = "WINNER";
-                            document.querySelector("#randomWord").innerHTML = "&#127867;Congratulions my friend , the correct word is: "  + word;
+                            document.querySelector("#randomWord").innerHTML = "&#127867;Congratulations my friend , the correct word is: "  + word;
                             
-                        } else if(result.length != word.length && trys >= 10) {
+                        } else if(result.length - 1 != word.length - 1 && trys >= 10) {
                             document.querySelector("#try").innerHTML = "LOSER";
                             document.querySelector("#randomWord").innerHTML = "&#127867;Sorry my friend you losed , the correct word is: "  + word;
                             
