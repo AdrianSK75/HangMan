@@ -45,50 +45,59 @@
         <div class = "topics">
             <h1 id = "try">WELCOME TO HANGMAN</h1>
             <h2 id = "randomWord" ></h2>
+            <h3 id = "last"></h3>
             <button id = "button" class = "button" type = "button" onclick = "checkHang()">TRY</button>
             <p id = "check"></p>
         </div>
 
         <script>
-               var words = ["monitor", "mouse", "pix", "caiet", "tastatura", "wellcode", "programator"];
-               var random = Math.floor(Math.random() * 7) + 1 , trys = 0;
+               
+               var words = ["monitor", "mouse", "pix", "caiet", "tastatura", "wellcode", "programator", "microfon", "camera", "stand", "minecraft", "csgo", "ecran"];
+               var random =  Math.floor(Math.random() * words.length) + 1, trys = 0;
                var word = new String(words[random]);
                const map = new Map();
                const frq = new Array(word.length).fill(0);
                var result = new Array();
                var len = word.length, count = 0;
                result[0] = word[0];
+               frq[0] = 1;
                document.querySelector("#randomWord").innerHTML = result[0] + " (first letter) / word length -> " + len;
                
                for(var i = 0; i < word.length; ++i) {
                     ++map[word[i]];
-                    frq[i] = 0;
+
                }
                
                function verifyPos(letter) {                     
                       for(var i = 0; i < word.length; ++i) {                           
                            if(word.charAt(i) == letter && frq[i] != 1) {
+                                 ++count;
                                  frq[i] = 1;
                                  return i;
                            }
                         }
                }
                
+               var useless = new String();
                function checkHang() {
                         var letter = window.prompt("Guess the letter :)");
                                            
                         if(map[letter] != null) {
                                 var pos = verifyPos(letter);
                                 result[pos] = letter;
-                                ++count;
+                                alert(count);
+                                document.querySelector("#try").innerHTML = "HANG &#128522;: " + trys + " / 10";
                                 document.querySelector("#randomWord").innerHTML = result.toString() + " / word length -> " + len;
-                                document.querySelector("#try").innerHTML = "HANG &#128522;: " + trys + " / 10";                          
+                                                          
+                                
                                 document.getElementById("check").style.color = "green";
                                 document.querySelector("#check").innerHTML = "the letter was accepted";
                         } else {            
+                                useless = useless + letter + " ";
                                 ++trys;  
                                     
                                 document.querySelector("#try").innerHTML = "HANG &#129301;: " + trys + " / 10";
+                                document.querySelector("#last").innerHTML = "Useless letters: " + useless;
                                 document.getElementById("check").style.color = "red";
                                 document.querySelector("#check").innerHTML = "the letter was not accepted";
                         }
