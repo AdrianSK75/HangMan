@@ -8,35 +8,60 @@
                 
                 font-family: 'Itim', cursive;
                 text-align: center;
-                margin-top: 15%;
+                margin-top: 10%;
                 font-size: 25px;
                 background-color: #8e9775;
             }
+            
             .topics {
                 color: #eeeeee;
             }
             
+            .keyboard {
+                text-align: center;
+            }
             .button {
                 display: inline-block;
-                padding: 15px 25px;
-                font-size: 24px;
+                padding: 6px 10px;
+                font-size: 20px;
                 cursor: pointer;
                 text-align: center;
                 text-decoration: none;
                 outline: none;
-                color: #fff;
-                background-color: #eeeeee;
+                color: #eeeeee;
+                background-color: #8e9775;
                 border: none;
                 border-radius: 15px;
                 box-shadow: 0 9px #999;
             }
 
-            .button:hover {background-color: #4a503d}
+            .button:hover {background-color: #eeeeee}
 
+            .resetButton {
+                display: inline-block;
+                padding: 6px 100px;
+                font-size: 20px;
+                cursor: pointer;
+                text-align: center;
+                text-decoration: none;
+                outline: none;
+                color: #eeeeee;
+                background-color: #8e9775;
+                border: none;
+                border-radius: 15px;
+                box-shadow: 0 9px #999;
+            }
+
+            .resetButton:hover {background-color: #8e9775}
             .button:active {
-                background-color: #4a503d;
-                box-shadow: 0 5px #666;
-                transform: translateY(4px);
+                    background-color: #8e9775;
+                    box-shadow: 0 5px #eeeeee;
+                    transform: translateY(4px);
+            }
+            .resetButton:active {
+                    background-color: #8e9775;
+                    box-shadow: 0 5px #eeeeee;
+                    transform: translateY(4px);
             }
             
         </style>
@@ -46,73 +71,112 @@
             <h1 id = "try">WELCOME TO HANGMAN</h1>
             <h2 id = "randomWord" ></h2>
             <h3 id = "last"></h3>
-            <button id = "button" class = "button" type = "button" onclick = "checkHang()">TRY</button>
+            <div class = "keyboard">
+              
+                <button class = "button" type = "button" onclick = "checkHang('a')">A</button>
+                <button class = "button" type = "button" onclick = "checkHang('b')">B</button>
+                <button class = "button" type = "button" onclick = "checkHang('c')">C</button>
+                <button class = "button" type = "button" onclick = "checkHang('d')">D</button>
+                <button class = "button" type = "button" onclick = "checkHang('e')">E</button>
+                <button class = "button" type = "button" onclick = "checkHang('f')">F</button>
+                <button class = "button" type = "button" onclick = "checkHang('g')">G</button>
+                <button class = "button" type = "button" onclick = "checkHang('h')">H</button>
+                <button class = "button" type = "button" onclick = "checkHang('i')">I</button>
+                <button class = "button" type = "button" onclick = "checkHang('j')">J</button>
+                <button class = "button" type = "button" onclick = "checkHang('k')">K</button>
+                <button class = "button" type = "button" onclick = "checkHang('l')">L</button>
+                <button class = "button" type = "button" onclick = "checkHang('m')">M</button><br><br>
+                <button class = "button" type = "button" onclick = "checkHang('n')">N</button>
+                <button class = "button" type = "button" onclick = "checkHang('o')">O</button>
+                <button class = "button" type = "button" onclick = "checkHang('p')">P</button>
+                <button class = "button" type = "button" onclick = "checkHang('q')">Q</button>
+                <button class = "button" type = "button" onclick = "checkHang('r')">R</button>
+                <button class = "button" type = "button" onclick = "checkHang('s')">S</button>
+                <button class = "button" type = "button" onclick = "checkHang('t')">T</button>
+                <button class = "button" type = "button" onclick = "checkHang('u')">U</button>
+                <button class = "button" type = "button" onclick = "checkHang('v')">V</button>
+                <button class = "button" type = "button" onclick = "checkHang('w')">W</button>
+                <button class = "button" type = "button" onclick = "checkHang('x')">X</button>
+                <button class = "button" type = "button" onclick = "checkHang('y')">Y</button>
+                <button class = "button" type = "button" onclick = "checkHang('z')">Z</button><br><br>
+                
+
+          <button class = "resetButton" type = "button" onclick ="resetGame()">Reset</button>
+    </div>
             <p id = "check"></p>
         </div>
 
         <script>
                
-               var words = ["monitor", "mouse", "pix", "caiet", "tastatura", "wellcode", "programator", "microfon", "camera", "stand", "minecraft", "csgo", "ecran"];
-               var random =  Math.floor(Math.random() * words.length) + 1, trys = 0;
-               var word = new String(words[random]);
-               const map = new Map();
-               const frq = new Array(word.length).fill(0);
-               var result = new Array();
-               var len = word.length, count = 0;
-               result[0] = word[0];
-               frq[0] = 1;
-               document.querySelector("#randomWord").innerHTML = result[0] + " (first letter) / word length -> " + len;
                
+                var words = ["monitor", "mouse", "pix", "caiet", "tastatura", "wellcode", "programator", "microfon", "camera", "stand", "minecraft", "csgo", "ecran"];
+                var random =  Math.floor(Math.random() * words.length) + 1, trys = 0;
+                var word = new String(words[random]);
+                const map = new Map();
+                const frq = new Array(word.length).fill(0);
+                var result = new Array();
+                var len = word.length, count = 0;
+                frq[0] = 1;
+
+
                for(var i = 0; i < word.length; ++i) {
                     ++map[word[i]];
+                    result[i] = '_';
 
                }
-               
+               result[0] = word[0];
+               document.querySelector("#randomWord").innerHTML = result.toString();
+
                function verifyPos(letter) {                     
                       for(var i = 0; i < word.length; ++i) {                           
                            if(word.charAt(i) == letter && frq[i] != 1) {
                                  ++count;
                                  frq[i] = 1;
-                                 return i;
+                                 result[i] = letter;
                            }
                         }
                }
                
                var useless = new String();
-               function checkHang() {
-                        var letter = window.prompt("Guess the letter :)");
-                                           
-                        if(map[letter] != null) {
-                                var pos = verifyPos(letter);
-                                result[pos] = letter;
+               var letter = new String();
+               function checkHang(letter) {    
+                      this.letter = letter;
 
-                                document.querySelector("#try").innerHTML = "HANG &#128522;: " + trys + " / 10";
-                                document.querySelector("#randomWord").innerHTML = result.toString() + " / word length -> " + len;
-                                                          
+                      if(map[letter] != null) {
+                            verifyPos(letter);
                                 
-                                document.getElementById("check").style.color = "green";
-                                document.querySelector("#check").innerHTML = "the letter was accepted";
+
+                            document.querySelector("#try").innerHTML = "HANG &#128522;: " + trys + " / 10";
+                            document.querySelector("#randomWord").innerHTML = result.toString();
+                                                                                         
+                            document.getElementById("check").style.color = "green";
+                            document.querySelector("#check").innerHTML = "the letter was accepted";
                         } else {            
-                                useless = useless + letter + " ";
-                                ++trys;  
+                            useless = useless + letter + " ";
+                            ++trys;  
                                     
-                                document.querySelector("#try").innerHTML = "HANG &#129301;: " + trys + " / 10";
-                                document.querySelector("#last").innerHTML = "Useless letters: " + useless;
-                                document.getElementById("check").style.color = "red";
-                                document.querySelector("#check").innerHTML = "the letter was not accepted";
+                            document.querySelector("#try").innerHTML = "HANG &#129301;: " + trys + " / 10";
+                            document.querySelector("#last").innerHTML = "Useless letters: " + useless;
+                            document.getElementById("check").style.color = "red";
+                            document.querySelector("#check").innerHTML = "the letter was not accepted";
                         }
 
                         if(count == word.length - 1 && trys < 10) {    
                             document.querySelector("#try").innerHTML = "WINNER";
                             document.querySelector("#randomWord").innerHTML = "&#127867;Congratulations my friend , the correct word is: "  + word;
-                            
+                            document.querySelector("#last").innerHTML = "Press the reset button";
                         } else if(count != word.length - 1 && trys >= 10) {
                             document.querySelector("#try").innerHTML = "LOSER";
                             document.querySelector("#randomWord").innerHTML = "&#129319;Sorry my friend you losed , the correct word is: "  + word;
+                            document.querySelector("#last").innerHTML = "Press the reset button";
                             
                         }
 
                }
+
+            function resetGame() {
+                location.reload();
+            }
                
 
         </script>
